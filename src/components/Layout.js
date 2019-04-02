@@ -13,10 +13,11 @@ class Layout extends Component {
         this.state = {
             inputText: ""
         }
+        this.operations = ['Del' ,'+' , '-' , '*' , '/'] 
     }
 
     calculateResult(){
-        let text = this.state.inputText
+        const text = this.state.inputText
 
         //parse Text
 
@@ -43,6 +44,21 @@ class Layout extends Component {
                 this.setState({
                     inputText: text.join('')
                 })
+                break
+
+             case '+':
+             case '-':
+             case '*':
+             case '/':
+                    const lastChar = this.state.inputText.split('').pop()
+                    if(this.operations.indexOf(lastChar) > 0) return
+                    if(this.state.text == "")  {
+                        return
+                    } 
+
+                    this.setState({
+                        inputText: this.state.inputText + operations
+                    })
         }
     }
     render() {
@@ -60,10 +76,10 @@ class Layout extends Component {
         }
 
         //Operation Buttons
-        let operations = ['Del' ,'+' , '-' , '*' , '/'] , ops = []
-        for(let i=0; i<4; i++){
-            ops.push(<TouchableOpacity onPress={() => this.operate(operations[i])} style = {styles.btn}>
-                <Text style ={[styles.btnText, styles.white]}>{operations[i]}</Text>
+        let ops = []
+        for(let i=0; i<5; i++){
+            ops.push(<TouchableOpacity onPress={() => this.operate(this.operations[i])} style = {styles.btn}>
+                <Text style ={[styles.btnText, styles.white]}>{this.operations[i]}</Text>
                 </TouchableOpacity>
             )
         }
