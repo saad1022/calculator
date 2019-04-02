@@ -11,7 +11,8 @@ class Layout extends Component {
     constructor() {
         super()
         this.state = {
-            inputText: ""
+            inputText: "",
+            calculationText: ""
         }
         this.operations = ['Del' ,'+' , '-' , '*' , '/'] 
     }
@@ -20,14 +21,28 @@ class Layout extends Component {
         const text = this.state.inputText
 
         //parse Text
+        this.setState({
+            calculationText: eval(text)
+        })
 
     }
 
+    validate(){
+        const text = this.state.inputText
+        switch(text.slice(-1)){
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+                return false
+        }
+        return true
+    }
 
     buttonPressed(text) {
         
         if(text == '='){
-            return  calculateResult()
+            return  this.validate() && this.calculateResult()
           }
         
         this.setState({
@@ -50,8 +65,11 @@ class Layout extends Component {
              case '-':
              case '*':
              case '/':
+
                     const lastChar = this.state.inputText.split('').pop()
+
                     if(this.operations.indexOf(lastChar) > 0) return
+
                     if(this.state.text == "")  {
                         return
                     } 
@@ -91,7 +109,7 @@ class Layout extends Component {
                     <Text style={styles.inputText}>{this.state.inputText}</Text>
                 </View>
                 <View style = {styles.calculation}>
-                    <Text style = {styles.calculationText}>121</Text>
+                    <Text style = {styles.calculationText}>{this.state.calculationText}</Text>
                 </View>
                 
                 <View style = {styles.buttons}>
