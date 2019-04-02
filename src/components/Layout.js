@@ -10,17 +10,49 @@ class Layout extends Component {
     
     constructor() {
         super()
-        this.state = {}
+        this.state = {
+            inputText: ""
+        }
     }
 
+    calculateResult(){
+        let text = this.state.inputText
+
+        //parse Text
+
+    }
+
+
+    buttonPressed(text) {
+        
+        if(text == '='){
+            return  calculateResult()
+          }
+        
+        this.setState({
+            inputText: this.state.inputText+text
+        })
+    }
+
+    operate (operations) {
+        switch(operations){
+            case 'Del':
+                const text = this.state.inputText.split('')
+                text.pop()
+                
+                this.setState({
+                    inputText: text.join('')
+                })
+        }
+    }
     render() {
-        let elems = [[1,2,3] , [4,5,6] , [7,8,9] ,[0,0,'=']] , rows = [] 
+        let elems = [[1,2,3] , [4,5,6] , [7,8,9] ,['.',0,'=']] , rows = [] 
         
         //Number Buttons
         for (let i=0; i < 4; i++){
             let row = []
             for(let j=0; j < 3; j++){
-                row.push(<TouchableOpacity style = {styles.btn}>
+                row.push(<TouchableOpacity onPress={() => this.buttonPressed(elems[i][j])} style = {styles.btn}>
                 <Text style ={styles.btnText}>{elems[i][j]}</Text>
                 </TouchableOpacity>)
             }
@@ -28,9 +60,9 @@ class Layout extends Component {
         }
 
         //Operation Buttons
-        let operations = ['+' , '-' , '*' , '/'] , ops = []
+        let operations = ['Del' ,'+' , '-' , '*' , '/'] , ops = []
         for(let i=0; i<4; i++){
-            ops.push(<TouchableOpacity style = {styles.btn}>
+            ops.push(<TouchableOpacity onPress={() => this.operate(operations[i])} style = {styles.btn}>
                 <Text style ={[styles.btnText, styles.white]}>{operations[i]}</Text>
                 </TouchableOpacity>
             )
@@ -40,7 +72,7 @@ class Layout extends Component {
             <View style = {styles.container}>
 
                 <View style = {styles.input}>
-                    <Text style={styles.inputText}>11 X 11</Text>
+                    <Text style={styles.inputText}>{this.state.inputText}</Text>
                 </View>
                 <View style = {styles.calculation}>
                     <Text style = {styles.calculationText}>121</Text>
