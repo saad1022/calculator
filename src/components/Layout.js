@@ -14,7 +14,7 @@ class Layout extends Component {
             inputText: "",
             calculationText: ""
         }
-        this.operations = ['Del' ,'+' , '-' , '*' , '/'] 
+        this.operations = ['C' ,'/' , 'X' , '-' , '+'] 
     }
 
     calculateResult(){
@@ -52,7 +52,7 @@ class Layout extends Component {
 
     operate (operations) {
         switch(operations){
-            case 'Del':
+            case 'C':
                 const text = this.state.inputText.split('')
                 text.pop()
                 
@@ -80,23 +80,23 @@ class Layout extends Component {
         }
     }
     render() {
-        let elems = [[1,2,3] , [4,5,6] , [7,8,9] ,['.',0,'=']] , rows = [] 
+        let elems = [[7,8,9] , [4,5,6] , [1,2,3] ,['.',0,'=']] , rows = [] 
         
         //Number Buttons
         for (let i=0; i < 4; i++){
             let row = []
             for(let j=0; j < 3; j++){
-                row.push(<TouchableOpacity onPress={() => this.buttonPressed(elems[i][j])} style = {styles.btn}>
+                row.push(<TouchableOpacity key={elems[i][j]} onPress={() => this.buttonPressed(elems[i][j])} style = {styles.btn}>
                 <Text style ={styles.btnText}>{elems[i][j]}</Text>
                 </TouchableOpacity>)
             }
-            rows.push(<View style = {styles.row}>{row}</View>)
+            rows.push(<View key={i} style = {styles.row}>{row}</View>)
         }
 
         //Operation Buttons
         let ops = []
         for(let i=0; i<5; i++){
-            ops.push(<TouchableOpacity onPress={() => this.operate(this.operations[i])} style = {styles.btn}>
+            ops.push(<TouchableOpacity key={this.operations[i]} onPress={() => this.operate(this.operations[i])} style = {styles.btn}>
                 <Text style ={[styles.btnText, styles.white]}>{this.operations[i]}</Text>
                 </TouchableOpacity>
             )
@@ -128,10 +128,11 @@ const styles = StyleSheet.create({
         },
         inputText:{
             fontSize: 30,
-            color: 'white'
+            color: 'black'
         },
         btnText: {
-            fontSize: 30
+            fontSize: 34,
+            color: 'white'
         },
         white: {
             color: 'white'
@@ -143,8 +144,8 @@ const styles = StyleSheet.create({
             justifyContent: 'center'
         },
         calculationText:{
-            fontSize: 24,
-            color: 'white'
+            fontSize: 38,
+            color: 'black'
         },
         row: {
             flexDirection: 'row',
@@ -154,13 +155,13 @@ const styles = StyleSheet.create({
         },
         input: {
             flex: 2,
-            backgroundColor : 'red',
+            backgroundColor : 'white',
             justifyContent: 'center',
             alignItems: 'flex-end'
         },
         calculation:{
             flex: 1,
-            backgroundColor: 'green',
+            backgroundColor: 'white',
             justifyContent: 'center',
             alignItems: 'flex-end'
         },
@@ -170,11 +171,12 @@ const styles = StyleSheet.create({
         },
         numbers: {
             flex: 3,
-            backgroundColor: 'yellow'
+            backgroundColor: '#434343'
+
         },
         operations: {
             flex: 1,
-            backgroundColor: 'black',
+            backgroundColor: '#636363',
             justifyContent: 'space-around',
             alignItems: 'stretch'
         }
